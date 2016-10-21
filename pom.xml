@@ -22,6 +22,7 @@
 		<spring.version>4.3.17.RELEASE</spring.version>
 		<httpclient.version>4.5.2</httpclient.version>
 		<spring.amqp.version>2.0.1.RELEASE</spring.amqp.version>
+		<spring.security.version>4.2.6.RELEASE</spring.security.version>
 	</properties>
 
 	<dependencies>
@@ -160,7 +161,6 @@
 			<artifactId>hystrix-core</artifactId>
 			<version>1.5.10</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
@@ -174,12 +174,41 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		
 		<!-- Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.sap.xs2.security</groupId>
 			<artifactId>java-container-security</artifactId>
-			<version>0.27.2</version>
+			<version>0.30.3</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- Testing -->
