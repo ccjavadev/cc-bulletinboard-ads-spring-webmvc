@@ -8,6 +8,7 @@ applications:
       # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
       # This may help with slow startup times, especially when using Spring Boot.
       JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
+      USER_ROUTE: 'https://bulletinboard-users.cfapps.sap.hana.ondemand.com'
   services:
   - postgres-bulletinboard-ads
   - applogs-bulletinboard
