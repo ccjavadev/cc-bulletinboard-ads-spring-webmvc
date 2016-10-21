@@ -12,6 +12,9 @@ import javax.validation.constraints.Min;
 import org.springframework.data.domain.PageRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sap.bulletinboard.ads.models.Advertisement;
 import com.sap.bulletinboard.ads.models.AdvertisementRepository;
+import com.sap.hcp.cf.logging.common.customfields.CustomField;
 
 /*
  * Use a path which does not end with a slash! Otherwise the controller is not reachable when not using the trailing
@@ -46,6 +50,7 @@ public class AdvertisementController {
     public static final String DEFAULT_PAGE_ID = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
 
+    private static final Marker TECHNICAL = MarkerFactory.getMarker("TECHNICAL");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private AdvertisementRepository adRepository;
@@ -64,7 +69,12 @@ public class AdvertisementController {
 
     @GetMapping("/{id}")
     public Advertisement advertisementById(@PathVariable("id") @Min(0) Long id) {
-        logger.trace("method entry, GET: {}/{}", PATH, id);
+        MDC.put("endpoint", "GET: " + PATH + "/" + id);
+
+        logger.info("demonstration of custom fields, not part of message",
+                CustomField.customField("example-key", "example-value"));
+        logger.info("demonstration of custom fields, part of message: {}",
+                CustomField.customField("example-key", "example-value"));
         throwIfNonexisting(id);
         Advertisement ad = adRepository.findOne(id);
         logger.trace("returning: {}", ad);
@@ -80,7 +90,8 @@ public class AdvertisementController {
             UriComponentsBuilder uriComponentsBuilder) throws URISyntaxException {
 
         Advertisement savedAdvertisement = adRepository.save(advertisement);
-
+        logger.info(TECHNICAL, "created ad with version {}", savedAdvertisement.getVersion());
+        
         UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}")
                 .buildAndExpand(savedAdvertisement.getId());
         HttpHeaders headers = new HttpHeaders();
@@ -105,6 +116,7 @@ public class AdvertisementController {
     public Advertisement update(@PathVariable("id") long id, @RequestBody Advertisement updatedAd) {
         throwIfInconsistent(id, updatedAd.getId());
         throwIfNonexisting(id);
+        logger.trace(TECHNICAL, "updated ad with version {}", updatedAd.getVersion());
         return adRepository.save(updatedAd);
     }
 
