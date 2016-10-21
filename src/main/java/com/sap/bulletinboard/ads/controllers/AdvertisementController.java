@@ -10,6 +10,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 import org.springframework.data.domain.PageRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +46,10 @@ public class AdvertisementController {
     public static final String DEFAULT_PAGE_ID = "0";
     public static final String DEFAULT_PAGE_SIZE = "20";
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private AdvertisementRepository adRepository;
-    
+
     @Inject
     public AdvertisementController(AdvertisementRepository repository) {
         this.adRepository = repository;
@@ -60,8 +64,11 @@ public class AdvertisementController {
 
     @GetMapping("/{id}")
     public Advertisement advertisementById(@PathVariable("id") @Min(0) Long id) {
+        logger.trace("method entry, GET: {}/{}", PATH, id);
         throwIfNonexisting(id);
-        return adRepository.findOne(id);
+        Advertisement ad = adRepository.findOne(id);
+        logger.trace("returning: {}", ad);
+        return ad;
     }
 
     /**
@@ -74,7 +81,8 @@ public class AdvertisementController {
 
         Advertisement savedAdvertisement = adRepository.save(advertisement);
 
-        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(savedAdvertisement.getId());
+        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}")
+                .buildAndExpand(savedAdvertisement.getId());
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI(uriComponents.getPath()));
         return new ResponseEntity<>(savedAdvertisement, headers, HttpStatus.CREATED);
@@ -102,10 +110,12 @@ public class AdvertisementController {
 
     private void throwIfNonexisting(long id) {
         if (!adRepository.exists(id)) {
-            throw new NotFoundException(id + " not found");
+            NotFoundException notFoundException = new NotFoundException(id + " not found");
+            logger.warn("request failed", notFoundException);
+            throw notFoundException;
         }
     }
-    
+
     private void throwIfInconsistent(Long expected, Long actual) {
         if (!expected.equals(actual)) {
             String message = String.format(
