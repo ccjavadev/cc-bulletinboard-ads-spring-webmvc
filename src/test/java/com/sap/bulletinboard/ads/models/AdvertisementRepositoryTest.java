@@ -57,7 +57,7 @@ public class AdvertisementRepositoryTest {
         Timestamp timestampAfterUpdate = entity.getCreatedAt();
         assertThat(timestampAfterUpdate, is(timestampAfterCreation));
     }
-    
+
     @Test
     public void shouldSetUpdatedTimestampOnEveryUpdate() throws InterruptedException {
         entity = repo.save(entity);
@@ -77,7 +77,6 @@ public class AdvertisementRepositoryTest {
 
     @Test(expected = JpaOptimisticLockingFailureException.class)
     public void shouldUseVersionForConflicts() {
-        Advertisement entity = new Advertisement();
         entity.setTitle("some title");
         entity = repo.save(entity); // persists entity and sets initial version
 
@@ -85,5 +84,16 @@ public class AdvertisementRepositoryTest {
         Advertisement updatedEntity = repo.save(entity); // returns instance with updated version
 
         repo.save(entity); // tries to persist entity with outdated version
+    }
+
+    @Test
+    public void shouldFindByTitle() {
+        String title = "Find me";
+
+        entity.setTitle(title);
+        repo.save(entity);
+
+        Advertisement foundEntity = repo.findByTitle(title).get(0);
+        assertThat(foundEntity.getTitle(), is(title));
     }
 }
