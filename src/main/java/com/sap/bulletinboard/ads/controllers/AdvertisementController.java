@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
@@ -39,6 +41,8 @@ import com.sap.bulletinboard.ads.models.AdvertisementRepository;
 @Validated
 public class AdvertisementController {
     public static final String PATH = "/api/v1.0/ads";
+    public static final String DEFAULT_PAGE_ID = "0";
+    public static final String DEFAULT_PAGE_SIZE = "20";
 
     private AdvertisementRepository adRepository;
     
@@ -48,8 +52,10 @@ public class AdvertisementController {
     }
 
     @GetMapping
-    public Iterable<Advertisement> advertisements() {
-        return adRepository.findAll();
+    public Iterable<Advertisement> advertisements(
+            @RequestParam(name = "pageId", defaultValue = DEFAULT_PAGE_ID) int pageId, 
+            @RequestParam(name = "pageSize", defaultValue = DEFAULT_PAGE_SIZE) int pageSize) {
+        return adRepository.findAll(new PageRequest(pageId, pageSize));
     }
 
     @GetMapping("/{id}")

@@ -70,6 +70,11 @@ public class AdvertisementControllerTest {
     
     @Test
     public void readAll() throws Exception {
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+        
+        mockMvc.perform(buildPostRequest(SOME_TITLE))
+            .andExpect(status().isCreated());
         mockMvc.perform(buildPostRequest(SOME_TITLE))
             .andExpect(status().isCreated());
 
@@ -196,6 +201,38 @@ public class AdvertisementControllerTest {
         assertThat(idNewAd, is(not(id)));
     }
     
+    @Test
+    public void readAdsFromSeveralPages() throws Exception {
+        int pageSize = 5;
+        int adsCount = 6;
+        
+        mockMvc.perform(buildDeleteRequest(""))
+            .andExpect(status().isNoContent());
+        
+        for (int i = 0; i < adsCount; i++) {
+            mockMvc.perform(buildPostRequest(SOME_TITLE))
+                .andExpect(status().isCreated());
+        }
+        
+        mockMvc.perform(buildGetByPageRequest(0, pageSize))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.content.length()", is(pageSize)))
+            .andExpect(jsonPath("$.numberOfElements", is(pageSize)))
+            .andExpect(jsonPath("$.totalElements", is(adsCount)))
+            .andExpect(jsonPath("$.number", is(0))) //which page?
+            .andExpect(jsonPath("$.totalPages", is(2))); 
+        
+        mockMvc.perform(buildGetByPageRequest(1, pageSize))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(APPLICATION_JSON_UTF8))
+            .andExpect(jsonPath("$.content.length()", is(1)))
+            .andExpect(jsonPath("$.numberOfElements", is(1)))
+            .andExpect(jsonPath("$.totalElements", is(adsCount)))
+            .andExpect(jsonPath("$.number", is(1))) //which page?
+            .andExpect(jsonPath("$.totalPages", is(2))); 
+    }
+        
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
         Advertisement advertisement = new Advertisement();
         advertisement.setTitle(adsTitle);
@@ -215,6 +252,10 @@ public class AdvertisementControllerTest {
 
     private MockHttpServletRequestBuilder buildGetRequest(String id) throws Exception {
         return get(AdvertisementController.PATH + "/" + id);
+    }
+    
+    private MockHttpServletRequestBuilder buildGetByPageRequest(int pageId, int pageSize) throws Exception {
+        return get(AdvertisementController.PATH + "/?pageId=" + pageId + "&pageSize=" + pageSize);
     }
     
     private MockHttpServletRequestBuilder buildPutRequest(String id, Advertisement advertisement) throws Exception {
