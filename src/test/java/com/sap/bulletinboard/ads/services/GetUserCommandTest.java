@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.netflix.hystrix.Hystrix;
+import com.netflix.hystrix.exception.HystrixBadRequestException;
 import com.sap.bulletinboard.ads.services.UserServiceClient.User;
 
 /**
@@ -32,19 +33,30 @@ public class GetUserCommandTest {
         assertThat(user, is(USER));
     }
 
-//    @Test
-//    public void responseTimedOutFallback() {
-//        TestableUserCommand command = new TestableUserCommand().provokeTimeout();
-//        User user = command.execute();
-//        assertThat(user, is(not(USER)));
-//    }
-//
-//    @Test
-//    public void responseErrorFallback() {
-//        TestableUserCommand command = new TestableUserCommand().responseWithError();
-//        User user = command.execute();
-//        assertThat(user, is(not(USER)));
-//    }
+    @Test
+    public void responseTimedOutFallback() {
+        TestableUserCommand command = new TestableUserCommand().provokeTimeout();
+        User user = command.execute();
+        assertThat(user, is(not(USER)));
+    }
+
+    @Test
+    public void responseErrorFallback() {
+        TestableUserCommand command = new TestableUserCommand().responseWithError();
+        User user = command.execute();
+        assertThat(user, is(not(USER)));
+    }
+
+    @Test(expected = HystrixBadRequestException.class)
+    public void responseHystrixBadRequest() {
+        TestableUserCommand command = new TestableUserCommand().responseWithBadRequest();
+        User user = null;
+        try {
+            user = command.execute();
+        } finally {
+            assertThat(user, is(nullValue())); // fallback is not be called in case of HystrixBadRequestException
+        }
+    }
 
     // useful for optional exercise step
     private User dummyUser() {
@@ -73,6 +85,11 @@ public class GetUserCommandTest {
 
         TestableUserCommand responseWithError() {
             this.response = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return this;
+        }
+
+        TestableUserCommand responseWithBadRequest() {
+            this.response = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             return this;
         }
 
