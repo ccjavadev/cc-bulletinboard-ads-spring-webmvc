@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 
 import javax.inject.Inject;
 
@@ -121,7 +122,7 @@ public class AdvertisementControllerTest {
     
     @Test
     public void updateNotFound() throws Exception {
-        Advertisement advertisement = new Advertisement(SOME_TITLE);
+        Advertisement advertisement = new Advertisement(SOME_TITLE, "contact@email.de", new BigDecimal("20.00"), "EUR");
 
         mockMvc.perform(buildPutRequest("4711", advertisement)).andExpect(status().isNotFound());
     }
@@ -184,7 +185,7 @@ public class AdvertisementControllerTest {
     }
     
     private MockHttpServletRequestBuilder buildPostRequest(String adsTitle) throws Exception {
-        Advertisement advertisement = new Advertisement();
+        Advertisement advertisement = new Advertisement(adsTitle, "contact@email.de", new BigDecimal("20.00"), "EUR");
         advertisement.setTitle(adsTitle);
 
         // post the advertisement as a JSON entity in the request body

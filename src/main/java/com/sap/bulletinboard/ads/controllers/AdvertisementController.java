@@ -2,6 +2,7 @@ package com.sap.bulletinboard.ads.controllers;
 
 import static org.springframework.http.HttpStatus.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -42,8 +43,14 @@ public class AdvertisementController {
     public static final String PATH = "/api/v1/ads";
     private static int ID = 0;
 
-    private static final Map<Long, Advertisement> ads = new HashMap<>();
-
+    private static Map<Long, Advertisement> ads = new HashMap<>();
+    
+    static {
+        add(new Advertisement("my cozy teddy", "contact@email.de", new BigDecimal("19.00"), "EUR"));
+        add(new Advertisement("my pink bicycle", "pinklady@email.de", new BigDecimal("230.00"), "EUR"));
+        add(new Advertisement("play station", "lary@email.de", new BigDecimal("200.00"), "USD"));
+    }
+    
     @GetMapping
     public AdvertisementList advertisements() {
         return new AdvertisementList(ads.values());
@@ -66,12 +73,18 @@ public class AdvertisementController {
     public ResponseEntity<Advertisement> add(@Valid @RequestBody Advertisement advertisement,
             UriComponentsBuilder uriComponentsBuilder) throws URISyntaxException {
 
-        long id = ID++;
-        ads.put(id, advertisement);
+        add(advertisement);
 
-        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(id);
+        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(advertisement.getId());
         return ResponseEntity.created(new URI(uriComponents.getPath())).body(advertisement);
     }
+
+    private static void add(Advertisement advertisement) {
+        long id = ID++;
+        advertisement.setId(new Long(id));
+        ads.put(id, advertisement);
+    }
+
 
     @DeleteMapping
     @ResponseStatus(NO_CONTENT)
