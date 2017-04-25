@@ -160,6 +160,13 @@
 			<version>1.5.10</version>
 		</dependency>
 
+		<!-- Redis -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-data-redis</artifactId>
+			<version>1.2.0.RELEASE</version>
+		</dependency>
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>

@@ -8,6 +8,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import com.sap.bulletinboard.ads.config.WebAppContextConfig;
@@ -35,6 +36,10 @@ public class AppInitializer implements WebApplicationInitializer {
         // register logging servlet filter which logs HTTP request processing details
         servletContext.addFilter("RequestLoggingFilter", RequestLoggingFilter.class).addMappingForUrlPatterns(null,
                 false, "/*");
+        
+        // register spring session filter
+        servletContext.addFilter("springSessionRepositoryFilter", new DelegatingFilterProxy("springSessionRepositoryFilter"))
+                .addMappingForUrlPatterns(null, false, "/*");
     }
 
     /**
