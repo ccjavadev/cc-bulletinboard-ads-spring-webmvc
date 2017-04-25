@@ -1,5 +1,7 @@
 package com.sap.bulletinboard.ads.models;
 
+
+import com.sap.bulletinboard.ads.aspects.DoNotLog;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -51,7 +53,7 @@ public class Advertisement {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(/*@DoNotLog */String title) {
         this.title = title;
     }
 
