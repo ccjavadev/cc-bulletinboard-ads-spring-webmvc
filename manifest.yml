@@ -2,6 +2,7 @@
 applications:
 - name: bulletinboard-ads
   memory: 800M
+  timeout: 360
   path: target/bulletinboard-ads.war
   buildpack: https://github.com/cloudfoundry/java-buildpack.git#v4.6
   # buildpack: sap_java_buildpack
