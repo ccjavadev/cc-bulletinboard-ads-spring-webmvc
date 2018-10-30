@@ -25,6 +25,7 @@ applications:
   path: src/main/approuter
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.10
   memory: 128M
+  timeout: 360
   env:
     TENANT_HOST_PATTERN: "^(.*)-approuter-d012345.cfapps.sap.hana.ondemand.com"
     destinations: >
