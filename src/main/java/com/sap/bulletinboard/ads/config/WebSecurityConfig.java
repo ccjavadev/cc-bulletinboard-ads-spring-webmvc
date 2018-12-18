@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 
+import com.sap.bulletinboard.ads.AppInitializer;
 import com.sap.bulletinboard.ads.multitenancy.TenantFilter;
 import com.sap.xs2.security.commons.SAPOfflineTokenServicesCloud;
 
@@ -50,6 +51,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(PUT, "/api/v1/ads/**").access(hasScopeUpdate)
                 .antMatchers(DELETE, "/api/v1/ads/**").access(hasScopeUpdate)
                 .antMatchers(GET, "/api/v1/ads/**").access(hasScopeDisplay)
+                .antMatchers(AppInitializer.ODATA_END_POINT+"/**").permitAll()
                 .anyRequest().denyAll(); // deny anything not configured above
         // @formatter:on
     }

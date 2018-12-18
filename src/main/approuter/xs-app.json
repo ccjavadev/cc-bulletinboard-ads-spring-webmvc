@@ -9,5 +9,9 @@
         "source": "^/ads",
         "target": "/",
         "destination": "ads-destination"
+	    }, {
+        "source": "^/odata.svc/",
+        "target": "/odata.svc/",
+        "destination": "ads-destination"
     }]
 }
