@@ -37,8 +37,8 @@ public class JwtGenerator {
     }
 
     public JwtGenerator() {
-        this.clientId = "sb-xsapplication!t895";
-        this.identityZone = "1e505bb1-2fa9-4d2b-8c15-8c3e6e6279c6";
+        this.clientId = "testClient!t27";
+        this.identityZone = "a09a3440-1da8-4082-a89c-3cce186a9b6c";
     }
 
     public JwtGenerator setUserName(String userName) {
