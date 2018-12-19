@@ -6,7 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Activates Web MVC and its @Controller classes via RequestMappingHandlerMapping. Defines Spring beans for the
@@ -16,8 +19,18 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.sap.bulletinboard.ads") // includes sub packages
-public class WebAppContextConfig {
+public class WebAppContextConfig extends WebMvcConfigurerAdapter {
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/pages/**").addResourceLocations("/WEB-INF/pages/").setCachePeriod(31556926);
+    }
+    
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
+    
     @Bean
     @Profile("cloud")
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {

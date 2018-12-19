@@ -23,6 +23,8 @@
 		<httpclient.version>4.5.2</httpclient.version>
 		<spring.amqp.version>2.0.1.RELEASE</spring.amqp.version>
 		<spring.security.version>4.2.6.RELEASE</spring.security.version>
+    	<version.olingo>2.0.10</version.olingo>
+	    <version.cxf>3.2.0</version.cxf>
 	</properties>
 
 	<dependencies>
@@ -211,6 +213,89 @@
 			</exclusions>
 		</dependency>
 
+	    <!-- Apache Olingo Library dependencies -->
+	    <dependency>
+	      <groupId>org.apache.olingo</groupId>
+	      <artifactId>olingo-odata2-api</artifactId>
+	      <version>${version.olingo}</version>
+	    </dependency>
+	    <dependency>
+	      <artifactId>olingo-odata2-api-annotation</artifactId>
+	      <groupId>org.apache.olingo</groupId>
+	      <type>jar</type>
+	      <version>${version.olingo}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.olingo</groupId>
+	      <artifactId>olingo-odata2-core</artifactId>
+	      <version>${version.olingo}</version>
+	      <exclusions>
+	      	<exclusion>
+	      		<groupId>javax.ws.rs</groupId>
+	      		<artifactId>javax.ws.rs-api</artifactId>
+	      	</exclusion>
+	      </exclusions>
+	    </dependency>
+	    <!-- Apache Olingo Annotation Processor Extension dependencies -->
+	    <dependency>
+	      <groupId>org.apache.olingo</groupId>
+	      <artifactId>olingo-odata2-annotation-processor-api</artifactId>
+	      <version>${version.olingo}</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.olingo</groupId>
+	      <artifactId>olingo-odata2-annotation-processor-core</artifactId>
+	      <version>${version.olingo}</version>
+	    </dependency>    
+	    <dependency>
+	      <groupId>org.apache.cxf</groupId>
+	      <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+	      <version>${version.cxf}</version>
+	    </dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.olingo/olingo-odata2-jpa-processor-api -->
+		<dependency>
+		    <groupId>org.apache.olingo</groupId>
+		    <artifactId>olingo-odata2-jpa-processor-api</artifactId>
+		    <version>${version.olingo}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.eclipse.persistence</groupId>
+					<artifactId>javax.persistence</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.olingo</groupId>
+			<artifactId>olingo-odata2-jpa-processor-core</artifactId>
+		    <version>${version.olingo}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.olingo</groupId>
+			<artifactId>olingo-odata2-jpa-processor-ref</artifactId>
+		    <version>${version.olingo}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>	    
+		<dependency>
+			<groupId>org.apache.olingo</groupId>
+			<artifactId>
+   			olingo-odata2-annotation-processor-ref
+   		</artifactId>
+		    <version>${version.olingo}</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>			    
+
 		<!-- Testing -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -253,6 +338,7 @@
 	</dependencies>
 	<build>
 		<finalName>bulletinboard-ads</finalName>
+		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -340,7 +426,67 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>de.empulse.eclipselink</groupId>
+				<artifactId>staticweave-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>weave</goal>
+						</goals>
+						<configuration>
+							<persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
+							<logLevel>FINE</logLevel>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.persistence</groupId>
+						<artifactId>org.eclipse.persistence.jpa</artifactId>
+						<version>2.6.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											de.empulse.eclipselink
+										</groupId>
+										<artifactId>
+											staticweave-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.0.0,)
+										</versionRange>
+										<goals>
+											<goal>weave</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<reporting>
 		<plugins>
