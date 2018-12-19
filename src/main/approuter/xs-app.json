@@ -13,5 +13,9 @@
         "source": "^/odata.svc/",
         "target": "/odata.svc/",
         "destination": "ads-destination"
+    	}, {
+        "source": "^/pages/",
+        "target": "/pages/",
+        "destination": "ads-destination"
     }]
 }

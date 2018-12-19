@@ -52,6 +52,7 @@ public class WebSecurityConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(DELETE, "/api/v1/ads/**").access(hasScopeUpdate)
                 .antMatchers(GET, "/api/v1/ads/**").access(hasScopeDisplay)
                 .antMatchers(AppInitializer.ODATA_END_POINT+"/**").permitAll()
+                .antMatchers(GET, "/pages/Advertisements.html").permitAll()
                 .anyRequest().denyAll(); // deny anything not configured above
         // @formatter:on
     }

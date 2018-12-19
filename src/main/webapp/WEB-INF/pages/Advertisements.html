@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+
+		<script  src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.ui.commons,sap.ui.table,sap.m"
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<!-- add sap.ui.table,sap.ui.ux3 and/or other libraries to 'data-sap-ui-libs' if required -->
+		
+		<script>
+		
+		// Create instance of JSON model
+		  var oModel = new sap.ui.model.odata.ODataModel("/odata.svc/", false);
+	  
+		// Create instance of first table control
+        var oTable = new sap.ui.table.Table({
+            title : "SAPui5 table using ODATA service",
+            rowHeight : 50,
+            visibleRowCount : 9,
+			selectionMode: sap.ui.table.SelectionMode.Single, 
+			navigationMode: sap.ui.table.NavigationMode.scrollbar, 
+			selectionBehavior: sap.ui.table.SelectionBehavior.RowOnly,
+               //firstVisibleRow : 0
+        });
+     // First column "Id"
+        oTable.addColumn(new sap.ui.table.Column({
+               label : new sap.ui.commons.Label({
+                     text : "ID",
+                     textAlign : "Center",
+
+               }),
+               template : new sap.ui.commons.TextView({textAlign : "Center"}).bindProperty("text","Id"),
+                          sortProperty: "Id",
+                          filterProperty: "Id",
+						  filterType:"sap.ui.model.type.Integer",
+               
+        }));
+     //Second column "Title"
+        oTable.addColumn(new sap.ui.table.Column({
+            label : new sap.ui.commons.Label({
+                  text : "Title",
+                  textAlign : "Center",
+                 
+                
+            }),
+            template : new sap.ui.commons.TextView({textAlign : "Center"}).bindProperty("text","Title"),
+			sortProperty: "Title",
+            filterProperty: "Title",
+			filterType:"sap.ui.model.type.String",
+           
+     }));
+        
+        // Third column "Version"
+        oTable.addColumn(new sap.ui.table.Column({
+               label : new sap.ui.commons.Label({
+                     text : "Version",
+                     textAlign : "Center",
+
+               }),
+               template : new sap.ui.commons.TextView({textAlign : "Center"}).bindProperty("text","Version"),
+                          sortProperty: "Version",
+                          filterProperty: "Version",
+						  filterType:"sap.ui.model.type.Integer",
+               
+        }));
+        // fourth column "CreatedAt"
+        oTable.addColumn(new sap.ui.table.Column({
+               label : new sap.ui.commons.Label({
+                     text : "CreatedAt",
+                     textAlign : "Center"
+               }),
+               template : new sap.ui.commons.TextView({textAlign : "Center"}).bindProperty("text","CreatedAt"),
+			   sortProperty: "CreatedAt",
+               filterProperty: "CreatedAt",
+			   filterType:"sap.ui.model.type.Date",
+              
+        }));
+
+        // fifth column "ModifiedAt"
+        oTable.addColumn(new sap.ui.table.Column({
+               label : new sap.ui.commons.Label({
+                     text : "ModifiedAt",
+                     textAlign : "Center"
+               }),
+               template : new sap.ui.commons.TextView({textAlign : "Center"}).bindProperty("text","ModifiedAt"),
+			   sortProperty: "ModifiedAt",
+               filterProperty: "ModifiedAt",
+			   filterType:"sap.ui.model.type.Date",
+              
+        }));
+
+	   // set oDataModel for table
+			oTable.setModel(oModel);
+			oTable.bindRows("/Advertisements");
+     		
+			var page = sap.m.Page({
+				title:"Advertisements List",
+				content: oTable,
+				showNavButton:true,
+				navButtonTap:function(){
+						//window.open("","_self")
+				},
+				footer:new sap.m.Toolbar({
+				content: [
+					new sap.m.ToolbarSpacer(),
+					new sap.m.Button({
+						text : "CANCEL",
+						type:"Reject"
+					}),
+					new sap.m.Button({
+						text : "SAVE",
+						type:"Accept",
+						press: function(){
+							window.open("","_self")
+						}
+					})
+				]
+				}),
+		});
+		var app = sap.m.App();
+		app.addPage(page);
+		//app.setBackgroundImage("img/3.jpg");
+
+		app.placeAt("content");
+	  </script>
+	</head>
+   <body class="sapUiBody" role="application">
+		<div id="content"></div>
+   </body>
+</html>
