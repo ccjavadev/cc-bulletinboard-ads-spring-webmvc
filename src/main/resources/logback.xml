@@ -12,7 +12,7 @@
     </appender>
 
     <root level="${LOG_ROOT_LEVEL:-WARN}">
-        <appender-ref ref="${APPENDER:-STDOUT-JSON}"/>
+        <appender-ref ref="${APPENDER:-STDOUT}"/>
     </root>
 
     <logger name="com.sap.bulletinboard" level="${LOG_APP_LEVEL:-INFO}"/>
@@ -22,11 +22,4 @@
     
     <!-- suppress warning while stopping Tomcat (https://github.com/spring-projects/spring-boot/issues/4659) -->
     <logger name="org.apache.commons.dbcp2.BasicDataSource" level="${LOG_CF_LEVEL:-ERROR}"/>
-
-	<!-- do not log messages with TECHNICAL marker -->
-	<turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
-		<Name>TESTFILTER</Name>
-		<Marker>TECHNICAL</Marker>
-		<OnMatch>DENY</OnMatch>
-	</turboFilter>
 </configuration>
