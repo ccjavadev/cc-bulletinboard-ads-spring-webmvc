@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "b52a5514-bd34-4378-8c68-753ab7c34942",
+		"name": "Backend service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all ads",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://bulletinboard-ads-i314100.cfapps.eu10.hana.ondemand.com/api/v1/ads",
+					"protocol": "https",
+					"host": [
+						"bulletinboard-ads-i314100",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an ads",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Test ads\"\n}"
+				},
+				"url": {
+					"raw": "https://bulletinboard-ads-i314100.cfapps.eu10.hana.ondemand.com/api/v1/ads",
+					"protocol": "https",
+					"host": [
+						"bulletinboard-ads-i314100",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get ads by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://bulletinboard-ads-i314100.cfapps.eu10.hana.ondemand.com/api/v1/ads/1",
+					"protocol": "https",
+					"host": [
+						"bulletinboard-ads-i314100",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

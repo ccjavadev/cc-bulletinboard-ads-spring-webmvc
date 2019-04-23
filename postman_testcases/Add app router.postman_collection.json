@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "601f9e5a-23c8-448e-ba22-e9bb8c7f7b90",
+		"name": "Add app router",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic authentication",
+			"item": [
+				{
+					"name": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Xml9_Lhl",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "hualin.luan@sap.com",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/",
+							"protocol": "https",
+							"host": [
+								"i314100trial-approuter-i314100",
+								"cfapps",
+								"eu10",
+								"hana",
+								"ondemand",
+								"com"
+							],
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/ Copy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Xml9_Lhl",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "hualin.luan@sap.com",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/1",
+							"protocol": "https",
+							"host": [
+								"i314100trial-approuter-i314100",
+								"cfapps",
+								"eu10",
+								"hana",
+								"ondemand",
+								"com"
+							],
+							"path": [
+								"api",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/ Copy",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Xml9_Lhl",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "hualin.luan@sap.com",
+									"type": "string"
+								},
+								{
+									"key": "saveHelperData",
+									"value": true,
+									"type": "boolean"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Test ads creation in db\"\n}"
+						},
+						"url": {
+							"raw": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/api/",
+							"protocol": "https",
+							"host": [
+								"i314100trial-approuter-i314100",
+								"cfapps",
+								"eu10",
+								"hana",
+								"ondemand",
+								"com"
+							],
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "Xml9_Lhl",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "hualin.luan@sap.com",
+							"type": "string"
+						},
+						{
+							"key": "saveHelperData",
+							"value": true,
+							"type": "boolean"
+						},
+						{
+							"key": "showPassword",
+							"value": false,
+							"type": "boolean"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://i314100trial-approuter-i314100.cfapps.eu10.hana.ondemand.com/health/",
+					"protocol": "https",
+					"host": [
+						"i314100trial-approuter-i314100",
+						"cfapps",
+						"eu10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"health",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
