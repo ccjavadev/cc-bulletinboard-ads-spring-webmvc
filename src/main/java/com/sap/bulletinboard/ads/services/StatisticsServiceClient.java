@@ -15,7 +15,7 @@ import com.netflix.hystrix.HystrixCommandKey;
 import com.sap.bulletinboard.ads.config.CloudRabbitConfig;
 import com.sap.hcp.cf.logging.common.LogContext;
 
-@Component
+//@Component
 public class StatisticsServiceClient {
     private Logger logger = LoggerFactory.getLogger(getClass());
 

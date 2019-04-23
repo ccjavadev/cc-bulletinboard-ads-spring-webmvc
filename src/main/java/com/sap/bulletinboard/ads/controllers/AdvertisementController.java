@@ -63,14 +63,14 @@ public class AdvertisementController {
 
     private AdvertisementRepository adRepository;
     private UserServiceClient userServiceClient;
-    private StatisticsServiceClient statisticsServiceClient;
+//    private StatisticsServiceClient statisticsServiceClient;
 
     @Inject
-    public AdvertisementController(AdvertisementRepository repository, UserServiceClient userServiceClient,
-            StatisticsServiceClient statisticsServiceClient) {
+    public AdvertisementController(AdvertisementRepository repository, UserServiceClient userServiceClient) {
+//            StatisticsServiceClient statisticsServiceClient) {
         this.adRepository = repository;
         this.userServiceClient = userServiceClient;
-        this.statisticsServiceClient = statisticsServiceClient;
+//        this.statisticsServiceClient = statisticsServiceClient;
     }
 
     @GetMapping
@@ -97,7 +97,7 @@ public class AdvertisementController {
         logger.info("demonstration of custom fields, part of message: {}",
                 CustomField.customField("example-key", "example-value"));
         throwIfNonexisting(id);
-        statisticsServiceClient.advertisementIsShown(id);
+//        statisticsServiceClient.advertisementIsShown(id);
         AdvertisementDto ad = new AdvertisementDto(adRepository.findOne(id));
         logger.info("returning: {}", ad);
         return ad;
@@ -112,8 +112,8 @@ public class AdvertisementController {
             UriComponentsBuilder uriComponentsBuilder) throws URISyntaxException {
         throwIfIdNotNull(advertisement.getId());
 
-        if (userServiceClient.isPremiumUser("42")) {
-
+//        if (userServiceClient.isPremiumUser("42")) {
+          if(true) {
             AdvertisementDto savedAdvertisement = new AdvertisementDto(adRepository.save(advertisement.toEntity()));
             logger.trace(TECHNICAL, "created ad with version {}", savedAdvertisement.metadata.version);
             UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}")

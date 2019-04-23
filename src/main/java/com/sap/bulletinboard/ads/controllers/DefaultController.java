@@ -26,7 +26,7 @@ public class DefaultController {
 //
 //            return decodedJwt.getClaims();
 //        }
-        return JSONObject.quote("OK");
+        return JSONObject.quote(authorization);
     }
 
     @GetMapping("/instance-index")

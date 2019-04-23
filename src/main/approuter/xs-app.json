@@ -1,13 +1,22 @@
 {
     "welcomeFile": "index.html",
-    "routes": [{
-        "source": "^/ads/api/",
-        "target": "/api/",
-        "destination": "ads-destination",
-        "scope": "$XSAPPNAME.Display"
-        }, {
-        "source": "^/ads",
-        "target": "/",
-        "destination": "ads-destination"
-    }]
+    "routes": [
+        {
+            "source": "^/api/(.*)$",
+            "target": "/api/v1/ads/$1",
+            "destination": "ads-destination",
+            "authenticationType": "basic",
+            "csrfProtection": false
+        },
+        {
+            "source": "^/ads",
+            "target": "/",
+            "destination": "ads-destination"
+        },
+        {
+            "source": "^/health",
+            "target": "/health",
+            "destination": "ads-destination"
+        }
+    ]
 }
