@@ -16,6 +16,8 @@ cf s | grep uaa
 
 cf cs application-logs lite applogs-bulletinboard
 
+Update the user id in the manifest.yml
+
 cf push
 
 cf map-route approuter cfapps.eu10.hana.ondemand.com -n i314100trial-approuter-i314100
