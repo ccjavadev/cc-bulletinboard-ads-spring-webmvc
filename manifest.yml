@@ -1,5 +1,25 @@
 ---
 applications:
+- name: bulletinboard-ads
+  host: bulletinboard-ads-i314100
+  memory: 800M
+  path: target/bulletinboard-ads.war
+  buildpack: java_buildpack
+  # buildpack: sap_java_buildpack
+  # health-check-type: http
+  # health-check-http-endpoint: /health
+  env:
+      # Disable Spring Auto Reconfiguration
+      JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+      # Use the non-blocking /dev/urandom instead of the default to generate random numbers.
+      # When using Java community buildpack, increase startup times, especially when using Spring Boot.
+      JAVA_OPTS: -Djava.security.egd=file:///dev/./urandom
+      USER_ROUTE: 'https://bulletinboard-users-course.cfapps.eu10.hana.ondemand.com'
+  services:
+  - postgres-bulletinboard-ads
+  - applogs-bulletinboard
+#  - mq-bulletinboard
+
 - name: approuter
   host: approuter-i314100
   path: src/main/approuter
