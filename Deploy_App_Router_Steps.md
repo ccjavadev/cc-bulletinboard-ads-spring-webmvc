@@ -22,3 +22,6 @@ cf push
 
 cf map-route approuter cfapps.eu10.hana.ondemand.com -n i314100trial-approuter-i314100
 
+
+[Reference]
+https://github.com/ccjavadev/cc-coursematerial/blob/master/Security/Exercise_22_DeployApplicationRouter.md
