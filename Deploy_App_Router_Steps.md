@@ -2,9 +2,11 @@
 
 1. “cd” to a new folder <Your_Folder> and clone the git repo from the link below:
 
-​	git clone https://github.com/ccjavadev/cc-bulletinboard-ads-spring-webmvc.git
+​	`git clone https://github.com/ccjavadev/cc-bulletinboard-ads-spring-webmvc.git`
 
-2. `git checkout solution-23-Setup-Generic-Authorization`
+2. Check the branch:
+
+   `git checkout solution-23-Setup-Generic-Authorization`
 
 3. Install **node**
 
@@ -12,7 +14,9 @@
 
 5. prepare the .npmrc file under the folder src/main/approuter. There is already a file there, so should be no action here.
 
-6. Install the app router node_modules: *npm install --save @sap/approuter*
+6. Install the app router node_modules: 
+
+   *`npm install --save @sap/approuter`*
 
 7. Check the node_modules folder has been generated successfully
 
@@ -24,7 +28,7 @@
 
 10. Check it has been  successfully created: 
 
-    `cf s | grep uaa`
+   `cf s | grep uaa`
 
 11. Create the application-logs service instance for ELK:
 
